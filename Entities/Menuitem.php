@@ -37,6 +37,11 @@ class Menuitem extends Model
         return $this->belongsTo('Modules\Menu\Entities\Menu');
     }
 
+    public function page()
+    {
+        return $this->belongsTo('Modules\Page\Entities\Page');
+    }
+
     /**
      * Make the current menu item child of the given root item
      * @param Menuitem $rootItem

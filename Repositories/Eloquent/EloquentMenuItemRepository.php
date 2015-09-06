@@ -36,7 +36,7 @@ class EloquentMenuItemRepository extends EloquentBaseRepository implements MenuI
         return $this->model->whereHas('translations', function (Builder $q) {
             $q->where('status', 1);
             $q->where('locale', App::getLocale());
-        })->with('translations')->whereMenuId($menuId)->orderBy('position')->get();
+        })->with('translations')->whereMenuId($menuId)->orderBy('parent_id', 'position')->get();
     }
 
     /**

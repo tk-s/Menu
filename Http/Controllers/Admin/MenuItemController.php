@@ -76,6 +76,11 @@ class MenuItemController extends AdminBaseController
      */
     private function addMenuId(Menu $menu, FormRequest $request)
     {
-        return array_merge($request->all(), ['menu_id' => $menu->id]);
+        // Workaround Postgres does not support "" for int!
+        if ($request->get('page_id') == '') {
+            return array_merge($request->all(), ['menu_id' => $menu->id, 'page_id' => 0]);
+        } else {
+            return array_merge($request->all(), ['menu_id' => $menu->id]);
+        }
     }
 }
