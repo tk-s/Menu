@@ -11,6 +11,7 @@ use Modules\Menu\Repositories\Eloquent\EloquentMenuRepository;
 use Pingpong\Menus\MenuBuilder as Builder;
 use Pingpong\Menus\MenuFacade;
 use Pingpong\Menus\MenuItem as PingpongMenuItem;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class MenuServiceProvider extends ServiceProvider
 {
@@ -88,6 +89,7 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function addItemToMenu(Menuitem $item, Builder $menu)
     {
+        $child->title = str_replace("{locale}", LaravelLocalization::getCurrentLocaleNativeReading(), $child->title);
         if ($this->hasChildren($item)) {
             $this->addChildrenToMenu($item->title, $item->items, $menu, ['icon' => $item->icon, 'target' => $item->target]);
         } else {
@@ -124,6 +126,7 @@ class MenuServiceProvider extends ServiceProvider
      */
     private function addSubItemToMenu(Menuitem $child, PingpongMenuItem $sub)
     {
+        $child->title = str_replace("{locale}", LaravelLocalization::getCurrentLocaleNativeReading(), $child->title);
         if ($this->hasChildren($child)) {
             $this->addChildrenToMenu($child->title, $child->items, $sub);
         } else {
