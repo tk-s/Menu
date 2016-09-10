@@ -89,10 +89,10 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function addItemToMenu(Menuitem $item, Builder $menu)
     {
+        $item->title = str_replace("{locale}", LaravelLocalization::getCurrentLocaleNativeReading(), $item->title);
         if ($this->hasChildren($item)) {
             $this->addChildrenToMenu($item->title, $item->items, $menu, ['icon' => $item->icon, 'target' => $item->target]);
         } else {
-            $item->title = str_replace("{locale}", LaravelLocalization::getCurrentLocaleNativeReading(), $item->title);
             $target = $item->uri ?: $item->url;
             $menu->url(
                 $target,
@@ -126,10 +126,10 @@ class MenuServiceProvider extends ServiceProvider
      */
     private function addSubItemToMenu(Menuitem $child, PingpongMenuItem $sub)
     {
+        $child->title = str_replace("{locale}", LaravelLocalization::getCurrentLocaleNativeReading(), $child->title);
         if ($this->hasChildren($child)) {
             $this->addChildrenToMenu($child->title, $child->items, $sub);
         } else {
-            $child->title = str_replace("{locale}", LaravelLocalization::getCurrentLocaleNativeReading(), $child->title);
             $target = $child->uri ?: $child->url;
             $sub->url($target, $child->title, 0, ['icon' => $child->icon, 'target' => $child->target]);
         }
